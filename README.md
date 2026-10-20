@@ -5,8 +5,9 @@ The web front of OpenViCloud:
 - `site/`: the public website (landing page with live prices, customer docs) in English and Vietnamese, built with Astro.
 - `portal/`: the customer portal and the admin portal, built with React and Vite, one source tree and two images.
 
-The API they call is [OpenViCloud/titan](https://github.com/OpenViCloud/titan), and the design docs live there too.
-Paths such as `docs/features/...` in code comments refer to that repository.
+The API they call is [OpenViCloud/control-plane](https://github.com/OpenViCloud/control-plane); the design docs live in
+[OpenViCloud/titan](https://github.com/OpenViCloud/titan).
+Paths such as `docs/features/...` in code comments refer to titan.
 
 ## Develop
 
@@ -43,11 +44,12 @@ last 30 successful runs of each), so the three images always come from one commi
 
 ## API contract
 
-`api/openapi-v1.json` is a copy of the contract published by titan. `api/SOURCE` names the titan commit it was copied
-from. To update it, run:
+`api/openapi-v1.json` is a copy of the contract published by
+[OpenViCloud/control-plane](https://github.com/OpenViCloud/control-plane). `api/SOURCE` names the control-plane commit
+it was copied from. To update it, run:
 
 ```sh
-scripts/sync-spec.sh <titan commit, tag or branch>
+scripts/sync-spec.sh <control-plane commit, tag or branch>
 ```
 
 ## License
