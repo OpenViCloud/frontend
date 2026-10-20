@@ -32,6 +32,13 @@ mounted at `/`: open `/admin.html`, then navigate inside the app (see `portal/RE
 `site/` checks that the bold labels of its docs are labels the portal shows. It reads `portal/src/i18n/`,
 `portal/src/lib/*State.ts` and the API contract `api/openapi-v1.json`.
 
+## Images
+
+A push to `main` publishes `linux/arm64` images tagged with the commit's first 7 characters:
+`ghcr.io/openvicloud/frontend-portal` (`ci-portal.yml`), `frontend-admin-portal` (`ci-admin-portal.yml`) and
+`frontend-site` (`ci-site.yml`). Only the publishing job of a push to `main` may write packages; pull requests run the
+tests only. Titan's deployment picks up the latest published tags itself.
+
 ## API contract
 
 `api/openapi-v1.json` is a copy of the contract published by titan. `api/SOURCE` names the titan commit it was copied
