@@ -1,0 +1,46 @@
+name: CI — Portal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'portal/**'
+      - '.github/workflows/ci-portal.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'portal/**'
+      - '.github/workflows/ci-portal.yml'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portal
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: portal/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # A-1, deferred three times before US-PORTAL-01: portal had 48 lint errors and no gate to
+      # stop the 49th. `eslint .` reads eslint-suppressions.json, so this fails in BOTH directions —
+      # a new violation is an error, and a suppression whose problem no longer occurs is also an
+      # error ("suppressions left that do not occur anymore", exit 2). Neither needs a custom
+      # allowlist mechanism: ESLint 9 ships one. Reasons and the shrink plan: portal/eslint-suppressions.md
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test -- --run
+
+      - name: Typecheck & build
+        run: npm run build
