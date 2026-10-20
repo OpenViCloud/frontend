@@ -37,7 +37,8 @@ mounted at `/`: open `/admin.html`, then navigate inside the app (see `portal/RE
 A push to `main` publishes `linux/arm64` images tagged with the commit's first 7 characters:
 `ghcr.io/openvicloud/frontend-portal` (`ci-portal.yml`), `frontend-admin-portal` (`ci-admin-portal.yml`) and
 `frontend-site` (`ci-site.yml`). Only the publishing job of a push to `main` may write packages; pull requests run the
-tests only. Titan's deployment picks up the latest published tags itself.
+tests only. The packages are private: OpenViCloud/titan decides which tag each of its environments runs and
+pulls it with its own credentials.
 
 ## API contract
 

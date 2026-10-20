@@ -112,7 +112,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # The source label links the package to this repository, which owns it.
+      # Published with this repository's token, the package is linked to this repository; the label records the source too.
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:

@@ -1,7 +1,8 @@
 name: CI — Admin Portal
 
 # Same source tree as the customer portal (portal/), built into a separate image whose nginx serves admin.html at the
-# root (portal/Dockerfile.admin). ci-portal tests that tree, so this workflow only builds and publishes the image.
+# root (portal/Dockerfile.admin). It has no tests of its own: ci-portal tests the same tree in a separate run, and
+# this publish does not wait for it.
 on:
   push:
     branches: [main]
@@ -13,7 +14,6 @@ permissions:
   contents: read
 
 jobs:
-  # Only a push to main publishes: pull requests (forks included) run the tests with a read-only token.
   build-and-push:
     name: Build & Push
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # The source label links the package to this repository, which owns it.
+      # Published with this repository's token, the package is linked to this repository; the label records the source too.
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
