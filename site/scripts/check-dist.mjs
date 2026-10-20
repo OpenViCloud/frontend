@@ -3,7 +3,7 @@
 // notes, and credentials.local.md files hold real test passwords.
 // Usage: node scripts/check-dist.mjs [--docs-dir <titan docs/>] [--require-docs]
 import { createHash } from 'node:crypto';
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -57,7 +57,12 @@ export function distProblems({ distDir, docsDir, requireDocs }) {
   return { problems, distCount: distFiles.length, docsCompared };
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+// Node gives argv[1] as typed but the module URL with symlinks resolved; compare both resolved.
+export function isMain(scriptPath, moduleUrl) {
+  return realpathSync(scriptPath) === realpathSync(fileURLToPath(moduleUrl));
+}
+
+if (isMain(process.argv[1], import.meta.url)) {
   const distDir = fileURLToPath(new URL('../dist', import.meta.url));
   if (!existsSync(distDir)) {
     console.error('check-dist: dist/ does not exist — run the build first');
