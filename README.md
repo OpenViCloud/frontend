@@ -34,11 +34,12 @@ mounted at `/`: open `/admin.html`, then navigate inside the app (see `portal/RE
 
 ## Images
 
-A push to `main` publishes `linux/arm64` images tagged with the commit's first 7 characters:
+Every push to `main` publishes all three `linux/arm64` images, tagged with the commit's first 7 characters:
 `ghcr.io/openvicloud/frontend-portal` (`ci-portal.yml`), `frontend-admin-portal` (`ci-admin-portal.yml`) and
 `frontend-site` (`ci-site.yml`). Only the publishing job of a push to `main` may write packages; pull requests run the
 tests only. A new package is private by default. OpenViCloud/titan decides which tag each of its environments runs
-and is responsible for pulling it.
+and is responsible for pulling it: it takes the newest commit for which all three workflows succeeded (among the
+last 30 successful runs of each), so the three images always come from one commit.
 
 ## API contract
 

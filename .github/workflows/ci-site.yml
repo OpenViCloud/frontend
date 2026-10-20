@@ -1,15 +1,10 @@
 name: CI — Site
 
 on:
+  # Every push to main builds every image of the repository, so they all come from one commit (titan pulls a
+  # commit only when every workflow here published it).
   push:
     branches: [main]
-    paths:
-      - 'site/**'
-      # The docs' bold labels are checked against these (site/src/scripts/labels.test.js).
-      - 'portal/src/i18n/**'
-      - 'portal/src/lib/*State.ts'
-      - 'api/openapi-v1.json'
-      - '.github/workflows/ci-site.yml'
   pull_request:
     branches: [main]
     paths:
