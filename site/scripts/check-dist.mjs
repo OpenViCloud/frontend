@@ -57,7 +57,7 @@ export function distProblems({ distDir, docsDir, requireDocs }) {
   return { problems, distCount: distFiles.length, docsCompared };
 }
 
-// Node gives argv[1] as typed but the module URL with symlinks resolved; compare both resolved.
+// Node gives argv[1] absolute with symlinks unresolved, and the module URL with them resolved; compare both resolved.
 export function isMain(scriptPath, moduleUrl) {
   return realpathSync(scriptPath) === realpathSync(fileURLToPath(moduleUrl));
 }
