@@ -4,11 +4,10 @@ name: CI — Admin Portal
 # root (portal/Dockerfile.admin). It has no tests of its own: ci-portal tests the same tree in a separate run, and
 # this publish does not wait for it.
 on:
+  # Every push to main builds every image of the repository, so they all come from one commit (titan pulls a
+  # commit only when every workflow here published it).
   push:
     branches: [main]
-    paths:
-      - 'portal/**'
-      - '.github/workflows/ci-admin-portal.yml'
 
 permissions:
   contents: read
