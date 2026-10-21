@@ -47,12 +47,11 @@ nếu chúng đã hết dùng (chúng phục vụ iteration `pay-requires-confir
 đã đóng). ⚠️ Kiểm *"còn dùng không"* **trước** khi type lại — type lại một file chết là công vô ích.
 **Không có người đứng tên; đây là rủi ro chấp nhận, không phải nợ đã kiểm soát.**
 
-### `react-refresh/only-export-components` — 7, ở `src/`
+### `react-refresh/only-export-components` — 5, ở `src/`
 
 | File | Số | Xuất kèm |
 |---|---|---|
 `src/contexts/TenantContext.tsx` | 2 | `useTenant`, `TenantContext` |
-`src/lib/router.tsx` | 2 | route object |
 `src/components/ui/badge.tsx` | 1 | `badgeVariants` (CVA) |
 `src/components/ui/button.tsx` | 1 | `buttonVariants` (CVA) |
 `src/admin/router.tsx` | 1 | route object |

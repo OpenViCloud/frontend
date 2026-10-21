@@ -33,10 +33,5 @@
     "react-refresh/only-export-components": {
       "count": 2
     }
-  },
-  "src/lib/router.tsx": {
-    "react-refresh/only-export-components": {
-      "count": 2
-    }
   }
 }

@@ -137,7 +137,7 @@ function countOnDisk(dir: string, relative: string): number {
 describe('no literal copy in components', () => {
   it('scans every component file', () => {
     const onDisk = countOnDisk(join(process.cwd(), 'src'), '/src')
-    expect(onDisk).toBeGreaterThan(40)
+    expect(onDisk).toBeGreaterThan(15)
     expect(Object.keys(sources).length).toBe(onDisk)
   })
 

@@ -1,56 +1,42 @@
-# OpenViCloud frontend
+# OpenViCloud Admin Console
 
-The web front of OpenViCloud:
+The admin portal of OpenViCloud (`portal/`), built with React and Vite, in English and Vietnamese. Operators use it to
+approve tenants, grant credit, settle invoices and manage the catalog and clusters.
 
-- `site/`: the public website (landing page with live prices, customer docs) in English and Vietnamese, built with Astro.
-- `portal/`: the customer portal and the admin portal, built with React and Vite, one source tree and two images.
+The customer portal lives in [OpenViCloud/titan-cloud-console](https://github.com/OpenViCloud/titan-cloud-console)
+and the public website in [OpenViCloud/titan-landing](https://github.com/OpenViCloud/titan-landing).
 
-The API they call is [OpenViCloud/control-plane](https://github.com/OpenViCloud/control-plane); the design docs live in
-[OpenViCloud/titan](https://github.com/OpenViCloud/titan).
-Paths such as `docs/features/...` in code comments refer to titan.
+The API it calls is [OpenViCloud/control-plane](https://github.com/OpenViCloud/control-plane); the design docs live in
+[OpenViCloud/titan](https://github.com/OpenViCloud/titan). Paths such as `docs/features/...` in code comments refer to
+titan.
 
 ## Develop
 
 Node 22.
 
 ```sh
-(cd portal && npm install && npm run dev)    # customer portal at /, admin portal at /admin.html
-(cd site && npm install && npm run dev)
+(cd portal && npm install && npm run dev)    # open /admin.html
 ```
 
-`npm run dev` in `portal/` needs a running OpenViCloud dev cluster: it sends `/v1` to `http://api.localhost:8080` and
-takes `/config.json` from `http://portal.localhost:8080` (admin: `http://admin.localhost:8080`). The cluster is set up
-by `local-cluster/mac` in [OpenViCloud/titan](https://github.com/OpenViCloud/titan). The admin portal's router is
-mounted at `/`: open `/admin.html`, then navigate inside the app (see `portal/README.md`).
+`npm run dev` needs a running OpenViCloud dev cluster: it sends `/v1` to `http://api.localhost:8080` and takes
+`/config.json` from `http://admin.localhost:8080`. The cluster is set up by `mac/` in
+[OpenViCloud/titan-local-cluster](https://github.com/OpenViCloud/titan-local-cluster). The admin router is mounted at
+`/`: open `/admin.html`, then navigate inside the app (see `portal/README.md`).
 
 ## Test
 
 ```sh
 (cd portal && npm run lint && npm test && npm run build)
-(cd site && npm test && npm run build)
 ```
 
-`site/` checks that the bold labels of its docs are labels the portal shows. It reads `portal/src/i18n/`,
-`portal/src/lib/*State.ts` and the API contract `api/openapi-v1.json`.
+## Image
 
-## Images
-
-Every push to `main` publishes all three `linux/arm64` images, tagged with the commit's first 7 characters:
-`ghcr.io/openvicloud/frontend-portal` (`ci-portal.yml`), `frontend-admin-portal` (`ci-admin-portal.yml`) and
-`frontend-site` (`ci-site.yml`). Only the publishing job of a push to `main` may write packages; pull requests run the
-tests only. A new package is private by default. OpenViCloud/titan decides which tag each of its environments runs
-and is responsible for pulling it: it takes the newest commit for which all three workflows succeeded (among the
-last 30 successful runs of each), so the three images always come from one commit.
-
-## API contract
-
-`api/openapi-v1.json` is a copy of the contract published by
-[OpenViCloud/control-plane](https://github.com/OpenViCloud/control-plane). `api/SOURCE` names the control-plane commit
-it was copied from. To update it, run:
-
-```sh
-scripts/sync-spec.sh <control-plane commit, tag or branch>
-```
+Every push to `main` publishes the `linux/arm64` image `ghcr.io/openvicloud/titan-admin-console`
+(`ci-admin-portal.yml`), tagged with the commit's first 7 characters. Only the publishing job of a push to `main` may
+write packages; pull requests run the tests only. Which tag an environment runs is decided outside this repository:
+dev by `scripts/pull-images.py` of
+[OpenViCloud/titan-local-cluster](https://github.com/OpenViCloud/titan-local-cluster), staging by a release of
+[OpenViCloud/titan](https://github.com/OpenViCloud/titan).
 
 ## License
 

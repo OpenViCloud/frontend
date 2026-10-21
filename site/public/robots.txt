@@ -1,3 +1,0 @@
-# Not announced yet: staging only, terms are still a placeholder (docs/features/public-site/design.md#site-deploy).
-User-agent: *
-Disallow: /
