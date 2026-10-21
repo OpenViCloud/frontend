@@ -168,7 +168,7 @@ describe('OfferingsSection', () => {
     expect(screen.getByText(/720\.000\s*₫\/tháng/)).toBeInTheDocument()
   })
 
-  // docs/features/customer-portal/design.md#portal-language — a rate keeps decimals, and in Vietnamese the decimal mark is a
+  // docs/features/cloud-console/design.md#portal-language — a rate keeps decimals, and in Vietnamese the decimal mark is a
   // comma: the field starts the way the page shows the price and reads what the admin types the same way.
   it('reads a price typed with the Vietnamese decimal mark', async () => {
     let sent: unknown = null

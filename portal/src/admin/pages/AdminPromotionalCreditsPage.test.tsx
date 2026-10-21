@@ -94,7 +94,7 @@ describe('AdminPromotionalCreditsPage', () => {
     await waitFor(() => expect(body).toEqual({ tenantId: 't1', amount: 500000, reason: 'welcome' }))
   })
 
-  // docs/features/customer-portal/design.md#portal-language — 500.000 is five hundred thousand đồng, the way the page shows it.
+  // docs/features/cloud-console/design.md#portal-language — 500.000 is five hundred thousand đồng, the way the page shows it.
   it('grants the amount typed with a grouping mark', async () => {
     let body: unknown = null
     stub([])
