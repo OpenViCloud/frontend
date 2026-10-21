@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
-// Staging UI regression (US-CR-03 credit → invoice). The login is automated; the beta-user password
+// Staging UI checks of the admin portal; some also open the customer portal at PORTAL_BASE_URL. Every spec
+// navigates to a full URL, so baseURL only covers a relative goto. The login is automated; the beta-user password
 // is read from BETA_USER_PASSWORD at runtime (inject from the k8s secret `beta-user-credentials`,
 // never hard-code). trace/video are OFF so the credential can never land in an artifact — explicit
 // screenshots (taken at safe points; password fields render masked) are the only captures.
@@ -12,7 +13,7 @@ export default defineConfig({
   retries: 0,
   reporter: [['list']],
   use: {
-    baseURL: process.env.PORTAL_BASE_URL || 'https://portal-titan-staging.openvicloud.com',
+    baseURL: process.env.ADMIN_BASE_URL || 'https://admin-titan-staging.openvicloud.com',
     headless: true,
     trace: 'off',
     video: 'off',
