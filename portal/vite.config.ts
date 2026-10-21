@@ -7,7 +7,6 @@ import path from 'path'
 // browser stays on one origin, and /config.json is the cluster's own, with the API made relative
 // (docs/features/customer-portal/design.md#portal-config-and-deploy).
 const DEV_API = 'http://api.localhost:8080'
-const DEV_PORTAL = 'http://portal.localhost:8080'
 const DEV_ADMIN = 'http://admin.localhost:8080'
 
 function devClusterConfig(): Plugin {
@@ -15,12 +14,8 @@ function devClusterConfig(): Plugin {
     name: 'dev-cluster-config',
     apply: 'serve',
     configureServer(server) {
-      server.middlewares.use('/config.json', async (req, res) => {
-        const referer = req.headers.referer
-        let app = DEV_PORTAL
-        if (referer !== undefined && referer.includes('/admin.html')) {
-          app = DEV_ADMIN
-        }
+      server.middlewares.use('/config.json', async (_req, res) => {
+        const app = DEV_ADMIN
         try {
           const cluster = await fetch(app + '/config.json')
           const config = (await cluster.json()) as Record<string, unknown>
@@ -51,7 +46,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html'),
         admin: path.resolve(__dirname, 'admin.html'),
       },
     },

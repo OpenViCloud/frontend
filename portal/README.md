@@ -4,14 +4,14 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 ## Dev against the dev cluster
 
-`npm run dev` runs the tenant portal (`/`) and the admin portal (`/admin.html`) against the dev cluster
-(`local-mac`, start it with `local-cluster/mac`). There is no mock backend: `vite.config.ts` proxies `/v1` to
-`http://api.localhost:8080` and serves the cluster's own `/config.json` with the API made relative, so sign-in is
-the cluster's Keycloak.
+`npm run dev` runs the admin portal (`/admin.html`) against the dev cluster (`local-mac`, set up by `mac/` in
+[OpenViCloud/titan-local-cluster](https://github.com/OpenViCloud/titan-local-cluster)). There is no mock backend:
+`vite.config.ts` proxies `/v1` to `http://api.localhost:8080` and serves the cluster's own `/config.json` (from
+`http://admin.localhost:8080`) with the API made relative, so sign-in is the cluster's Keycloak.
 
-- **Admin dev entry.** The admin router is mounted at `/`, but the dev entry file is `/admin.html`, so a single
-  Vite dev server 404s the router at `/admin.html`. Load `/admin.html` first, then client-navigate to `/` (in prod
-  the admin app is served at its own host root, so `/` matches directly).
+- **Admin dev entry.** The admin router is mounted at `/`, but the dev entry file is `/admin.html`, so the Vite dev
+  server 404s the router at `/admin.html`. Load `/admin.html` first, then client-navigate to `/` (in prod the admin
+  app is served at its own host root, so `/` matches directly).
 
 Currently, two official plugins are available:
 

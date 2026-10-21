@@ -31,28 +31,16 @@ dòng nào** ở code runtime của khách.
 
 ## Từng mục trong baseline
 
-### `@typescript-eslint/no-explicit-any` — 33, tất cả ở `e2e/`
+### `@typescript-eslint/no-explicit-any` — 0 (rời repo)
 
-| File | Số |
-|---|---|
-`e2e/pay-seed.spec.ts` | 14 |
-`e2e/seed-usage.spec.ts` | 13 |
-`e2e/cleanup.spec.ts` | 6 |
+Ba script seed/cleanup mang 33 dòng này (`e2e/pay-seed.spec.ts`, `e2e/seed-usage.spec.ts`, `e2e/cleanup.spec.ts`)
+chỉ chạy trên host portal khách, nên đã theo portal khách sang OpenViCloud/titan-cloud-console.
 
-**Lý do:** ba file này là **script seed/cleanup** chạy tay trên staging qua Playwright, không phải
-test hồi quy và không nằm trong bundle. `any` ở đây là response JSON của API đọc một lần rồi bỏ.
-
-**Đường teo:** khai `interface` cho response của từng endpoint chúng gọi — hoặc **xoá** ba file seed
-nếu chúng đã hết dùng (chúng phục vụ iteration `pay-requires-confirmation` và `seed-usage`, cả hai
-đã đóng). ⚠️ Kiểm *"còn dùng không"* **trước** khi type lại — type lại một file chết là công vô ích.
-**Không có người đứng tên; đây là rủi ro chấp nhận, không phải nợ đã kiểm soát.**
-
-### `react-refresh/only-export-components` — 7, ở `src/`
+### `react-refresh/only-export-components` — 5, ở `src/`
 
 | File | Số | Xuất kèm |
 |---|---|---|
 `src/contexts/TenantContext.tsx` | 2 | `useTenant`, `TenantContext` |
-`src/lib/router.tsx` | 2 | route object |
 `src/components/ui/badge.tsx` | 1 | `badgeVariants` (CVA) |
 `src/components/ui/button.tsx` | 1 | `buttonVariants` (CVA) |
 `src/admin/router.tsx` | 1 | route object |
@@ -62,7 +50,7 @@ nếu chúng đã hết dùng (chúng phục vụ iteration `pay-requires-confir
 dạng upstream ship. Hậu quả duy nhất là **Fast Refresh** remount thay vì hot-update file đó lúc dev.
 
 **Đường teo:** tách phần không-phải-component ra file riêng (`badge-variants.ts`, `router-routes.ts`).
-Rẻ và cơ học. **Chưa có story** — nhưng đây là 7 dòng **nên** teo, khác 33 dòng ở trên.
+Rẻ và cơ học. **Chưa có story** — nhưng đây là 5 dòng **nên** teo.
 
 ### `@typescript-eslint/no-unused-vars` — 0 (đã teo)
 

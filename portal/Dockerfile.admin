@@ -1,7 +1,5 @@
-# Admin portal image. Same source + build as the tenant portal (Dockerfile),
-# but nginx serves admin.html at the root instead of index.html. Separate image
-# + separate Deployment gives the admin app its own runtime, config, and network
-# identity (ADR-027).
+# Admin portal image: nginx serves admin.html at the root. A separate image and Deployment give the admin app its own
+# runtime, config and network identity.
 FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
 WORKDIR /app
 

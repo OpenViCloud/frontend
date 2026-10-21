@@ -1,5 +1,5 @@
 // Light or dark follows the OS unless the user picks one in the account menu. The pick is per browser.
-// index.html and admin.html run the same read before first paint, so keep the key and values in step.
+// admin.html runs the same read before first paint, so keep the key and values in step.
 export type ThemeChoice = 'system' | 'light' | 'dark'
 
 export const THEME_STORAGE_KEY = 'ovc-theme'

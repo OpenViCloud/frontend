@@ -19,7 +19,6 @@ const sources = import.meta.glob<string>(
 
 describe('no test double outside unit tests', () => {
   it('scans the app sources', () => {
-    expect(Object.keys(sources)).toContain('/src/main.tsx')
     expect(Object.keys(sources)).toContain('/src/admin/main.tsx')
   })
 
