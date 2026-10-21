@@ -20,7 +20,7 @@ const cluster = (o = {}) => ({
 })
 
 const notConfigured = () => cluster({
-  id: null, zoneId: 'eude01', name: 'eude01', endpoint: '', serverFingerprint: '', source: 'none',
+  id: null, zoneId: 'singapore01', name: 'singapore01', endpoint: '', serverFingerprint: '', source: 'none',
   createdAt: null, updatedAt: null,
 })
 
@@ -91,11 +91,11 @@ describe('AdminClustersPage', () => {
         if (body === null) {
           return HttpResponse.json([notConfigured()])
         }
-        return HttpResponse.json([cluster({ zoneId: 'eude01', name: 'eude01', endpoint: 'https://incus-eu:8443' })])
+        return HttpResponse.json([cluster({ zoneId: 'singapore01', name: 'singapore01', endpoint: 'https://incus-sg:8443' })])
       }),
       http.get('*/v1/admin/clusters/client-certificate', () =>
         HttpResponse.json({ certificatePem: TITAN_PEM, fingerprint: TITAN_FINGERPRINT })),
-      http.put('*/v1/admin/clusters/eude01', async ({ request }) => {
+      http.put('*/v1/admin/clusters/singapore01', async ({ request }) => {
         body = (await request.json()) as Record<string, unknown>
         return new HttpResponse(null, { status: 204 })
       }),
@@ -104,12 +104,12 @@ describe('AdminClustersPage', () => {
     renderWithProviders(<AdminClustersPage />)
     await screen.findByText('Not configured')
 
-    await user.type(screen.getByLabelText('Endpoint'), 'https://incus-eu:8443')
+    await user.type(screen.getByLabelText('Endpoint'), 'https://incus-sg:8443')
     await user.type(screen.getByLabelText('Server fingerprint'), PIN)
     await user.click(screen.getByRole('button', { name: 'Save' }))
 
     await waitFor(() => expect(body).not.toBeNull())
-    expect(body).toEqual({ name: 'eude01', endpoint: 'https://incus-eu:8443', serverFingerprint: PIN })
+    expect(body).toEqual({ name: 'singapore01', endpoint: 'https://incus-sg:8443', serverFingerprint: PIN })
     await waitFor(() => expect(listReads).toBeGreaterThan(1))
     await waitFor(() => expect(screen.getByText('Saved')).toBeInTheDocument())
   })
@@ -121,7 +121,7 @@ describe('AdminClustersPage', () => {
     await screen.findByText('Not configured')
 
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
-    await user.type(screen.getByLabelText('Endpoint'), 'https://incus-eu:8443')
+    await user.type(screen.getByLabelText('Endpoint'), 'https://incus-sg:8443')
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
     await user.type(screen.getByLabelText('Server fingerprint'), PIN)
     expect(screen.getByRole('button', { name: 'Save' })).toBeEnabled()
@@ -178,7 +178,7 @@ describe('AdminClustersPage', () => {
     renderWithProviders(<AdminClustersPage />)
 
     const saved = await screen.findByRole('form', { name: 'Cluster mock' })
-    const none = screen.getByRole('form', { name: 'Cluster eude01' })
+    const none = screen.getByRole('form', { name: 'Cluster singapore01' })
     expect(within(saved).getByRole('button', { name: 'Delete' })).toBeInTheDocument()
     expect(within(none).getByText('Not configured')).toBeInTheDocument()
     expect(within(none).queryByRole('button', { name: 'Delete' })).not.toBeInTheDocument()
@@ -238,7 +238,7 @@ describe('AdminClustersPage', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Cluster' })).toBeInTheDocument()
     const block = await screen.findByRole('region', { name: 'Chứng chỉ client của Titan' })
     expect(await within(block).findByRole('button', { name: 'Sao chép chứng chỉ' })).toBeInTheDocument()
-    const none = await screen.findByRole('form', { name: 'Cluster eude01' })
+    const none = await screen.findByRole('form', { name: 'Cluster singapore01' })
     expect(within(none).getByText('Chưa cấu hình')).toBeInTheDocument()
     expect(within(none).getByLabelText('Fingerprint máy chủ')).toBeInTheDocument()
     expect(within(none).getByRole('button', { name: 'Kiểm tra kết nối' })).toBeInTheDocument()

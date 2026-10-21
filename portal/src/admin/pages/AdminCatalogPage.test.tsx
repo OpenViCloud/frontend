@@ -49,10 +49,10 @@ describe('AdminCatalogPage', () => {
   // One template, two clusters: each zone's state on its own badge.
   it('shows each zone’s sync state on its own badge', async () => {
     server.use(http.get('*/v1/admin/templates', () => HttpResponse.json([
-      template({}, [zoneState({ zoneId: 'eude01', currentExistence: 'NotCreated', transition: 'Syncing', externalTemplateId: null }), zoneState()]),
+      template({}, [zoneState({ zoneId: 'singapore01', currentExistence: 'NotCreated', transition: 'Syncing', externalTemplateId: null }), zoneState()]),
     ])))
     renderWithProviders(<AdminCatalogPage />)
-    await waitFor(() => expect(screen.getByText('eude01 · Syncing')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('singapore01 · Syncing')).toBeInTheDocument())
     expect(screen.getByText('mock · Available')).toBeInTheDocument()
   })
 
@@ -69,14 +69,14 @@ describe('AdminCatalogPage', () => {
     server.use(http.get('*/v1/admin/templates', () => {
       reads++
       if (reads === 1) {
-        return HttpResponse.json([template({}, [zoneState({ zoneId: 'eude01', currentExistence: 'NotCreated', transition: 'Syncing', externalTemplateId: null }), zoneState()])])
+        return HttpResponse.json([template({}, [zoneState({ zoneId: 'singapore01', currentExistence: 'NotCreated', transition: 'Syncing', externalTemplateId: null }), zoneState()])])
       }
-      return HttpResponse.json([template({}, [zoneState({ zoneId: 'eude01', externalTemplateId: 'tpl-3' }), zoneState()])])
+      return HttpResponse.json([template({}, [zoneState({ zoneId: 'singapore01', externalTemplateId: 'tpl-3' }), zoneState()])])
     }))
     renderWithProviders(<AdminCatalogPage />)
-    await waitFor(() => expect(screen.getByText('eude01 · Syncing')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('singapore01 · Syncing')).toBeInTheDocument())
 
-    await waitFor(() => expect(screen.getByText('eude01 · Available')).toBeInTheDocument(), { timeout: 6000 })
+    await waitFor(() => expect(screen.getByText('singapore01 · Available')).toBeInTheDocument(), { timeout: 6000 })
   }, 10000)
 
   // docs/features/catalog/design.md#template-borrows-sizing — the Size cell shows the TIER the template points at, spelled out. The raw id "m"
